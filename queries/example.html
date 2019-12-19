@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+
+<h3>Group name</h3>
+
+Miners
+
+<h3>Project vision</h3>
+
+Viewing the attendance counts per each sport for a given school name and year, how many spectators were there for each sport?
+
+<h3>Initial results</h3>
+
+<table border="1" cellpadding="3">
+    <tr>
+        <td colspan="3" bgcolor="lightyellow">
+<pre>
+    SELECT sport, attendance
+    FROM uni_sport_attendance('James Madison', 2018)
+    ORDER BY attendance DESC, sport;
+</pre>
+        </td>
+    </tr>
+    <tr>
+        <th>Sport</th>
+        <th>Total Attendance</th>
+        <td rowspan="12">
+            <div id="attendancePiechart" style="width: 500px; height: 300px;"></div>
+            <div id="attendanceColumnchart" style="width: 750px; height: 500px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>Women's Basketball</td>
+        <td>28800</td>
+    </tr>
+    <tr>
+        <td>Men's Basketball</td>
+        <td>20482</td>
+    </tr>
+    <tr>
+        <td>Women's Lacrosse</td>
+        <td>12623</td>
+    </tr>
+    <tr>
+        <td>Baseball</td>
+        <td>8994</td>
+    </tr>
+    <tr>
+        <td>Women's Softball</td>
+        <td>6376</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ["Sport", "Total Attendance"],
+      ["Women's Basketball", 28800],
+      ["Men's Basketball", 20482],
+      ["Women's Lacrosse", 12623],
+      ["Baseball", 8994],
+      ["Women's Softball", 6376]
+    ]);
+
+    var options = {
+      chartArea: {width:'90%', height:'90%'},
+      title: 'Attendance by Sport',
+      subtitle: 'James Madison University: 2018'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('attendancePiechart'));
+
+    chart.draw(data, options);
+  }
+</script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ["Sport", "Total Attendance"],
+      ["Women's Basketball", 28800],
+      ["Men's Basketball", 20482],
+      ["Women's Lacrosse", 12623],
+      ["Baseball", 8994],
+      ["Women's Softball", 6376]
+      ]);
+
+      var options = {
+        chart: {
+        }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('attendanceColumnchart'));
+
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+<h3>Project vision</h3>
+
+Obtain the number of players for each sport for a university and year.
+
+<h3>Initial results</h3>
+
+<table border="1" cellpadding="3">
+    <tr>
+        <td colspan="3" bgcolor="lightyellow">
+<pre>
+    SELECT sport, count(sport) as c
+    FROM uni_players('James Madison', 2018)
+    GROUP BY sport
+    ORDER BY count(sport) DESC;
+</pre>
+        </td>
+    </tr>
+    <tr>
+        <th>Sport</th>
+        <th>Number of Players</th>
+        <td rowspan="12">
+            <div id="playersColumnchart" style="width: 1000px; height: 500px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>Baseball</td>
+        <td>35</td>
+    </tr>
+    <tr>
+        <td>Women's Lacrosse</td>
+        <td>33</td>
+    </tr>
+    <tr>
+        <td>Women's Soccer</td>
+        <td>26</td>
+    </tr>
+    <tr>
+        <td>Men's Soccer</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>Women's Field Hockey</td>
+        <td>24</td>
+    </tr>
+    <tr>
+        <td>Women's Softball</td>
+        <td>22</td>
+    </tr>
+    <tr>
+        <td>Women's Volleyball</td>
+        <td>17</td>
+    </tr>
+    <tr>
+        <td>Men's Basketball</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>Women's Basketball</td>
+        <td>13</td>
+    </tr>
+</table>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ["Sport", "Number of Players"],
+      ["Baseball", 35],
+      ["Women's Lacrosse", 33],
+      ["Women's Soccer", 26],
+      ["Men's Soccer", 25],
+      ["Women's Field Hockey", 24],
+      ["Women's Softball", 22],
+      ["Women's Volleyball", 17],
+      ["Men's Basketball", 14],
+      ["Women's Basketball", 13]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Number of Players by Sport',
+          subtitle: 'James Madison University: 2018'
+        },
+        hAxis: {
+            textStyle: {
+                fontSize: 8
+            }
+        }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('playersColumnchart'));
+
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+</body>
+</html>
